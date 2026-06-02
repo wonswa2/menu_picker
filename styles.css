@@ -1,0 +1,223 @@
+:root {
+  color-scheme: dark;
+  --bg: #121212;
+  --surface: #1e1e1e;
+  --surface-strong: #2a2a2a;
+  --border: #333;
+  --text: #f5f5f5;
+  --muted: #c3c3c3;
+  --accent: #ff7a60;
+  --success: #7dce82;
+  --danger: #ff5f7e;
+  --info: #8ab7ff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Noto Sans KR", system-ui, sans-serif;
+  background: radial-gradient(circle at top, #252525 0%, #111 75%);
+  color: var(--text);
+}
+
+.app-shell {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 20px 60px;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
+}
+
+header p {
+  margin-top: 12px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 22px;
+  margin-bottom: 20px;
+}
+
+.panel h2 {
+  margin-top: 0;
+  font-size: 1.15rem;
+}
+
+.categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.category-button {
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  transition: transform .2s ease, border-color .2s ease, background .2s ease;
+}
+
+.category-button.selected,
+.category-button:hover {
+  border-color: var(--accent);
+  background: rgba(255, 122, 96, 0.13);
+  transform: translateY(-1px);
+}
+
+.primary-btn,
+.secondary-btn,
+.like-btn,
+.reject-btn {
+  border: none;
+  border-radius: 14px;
+  font-size: 1rem;
+  padding: 14px 20px;
+  cursor: pointer;
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, var(--accent), #ff9e79);
+  color: #111;
+  width: 100%;
+  margin-top: 16px;
+}
+
+.primary-btn:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.secondary-btn {
+  background: #2b2b2b;
+  color: var(--text);
+  width: 100%;
+}
+
+.recommendation-card {
+  display: grid;
+  gap: 18px;
+  padding: 18px;
+  border-radius: 18px;
+  background: #141414;
+  border: 1px solid rgba(255,255,255,.06);
+}
+
+.menu-name {
+  font-size: clamp(1.8rem, 2.3vw, 2.4rem);
+  font-weight: 700;
+}
+
+.menu-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.menu-tag {
+  display: inline-flex;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.06);
+  color: var(--muted);
+  font-size: .95rem;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.like-btn {
+  background: var(--success);
+  color: #111;
+  flex: 1;
+}
+
+.reject-btn {
+  background: var(--danger);
+  color: #fff;
+  flex: 1;
+}
+
+.final-message,
+.hint-message,
+.no-more-message {
+  padding: 16px 18px;
+  border-radius: 16px;
+  background: rgba(255,255,255,.04);
+  color: var(--text);
+  line-height: 1.65;
+}
+
+.hint-message {
+  margin-top: 12px;
+  border: 1px dashed rgba(255,255,255,.12);
+}
+
+.no-more-message {
+  margin-top: 12px;
+  border: 1px dashed rgba(255,94,125,.2);
+  color: #ffb9c7;
+}
+
+.hidden {
+  display: none;
+}
+
+.hint-question {
+  margin-bottom: 16px;
+  font-size: 1rem;
+  color: var(--text);
+}
+
+.hint-options {
+  display: grid;
+  gap: 12px;
+}
+
+.hint-option {
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: #151515;
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color .2s ease, background .2s ease;
+}
+
+.hint-option:hover {
+  border-color: var(--info);
+  background: rgba(138,183,255,.08);
+}
+
+footer {
+  text-align: center;
+  color: var(--muted);
+  margin-top: 10px;
+}
+
+@media (max-width: 600px) {
+  .actions {
+    flex-direction: column;
+  }
+}

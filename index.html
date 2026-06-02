@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>오늘도 네 말이 맞아</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header>
+      <h1>오늘도 네 말이 맞아</h1>
+      <p>카테고리를 고르고, 아무거나 추천받은 뒤 <strong>좋아요</strong> 또는 <strong>이건 별로야</strong>로 취향을 찾아보세요.</p>
+    </header>
+
+    <section class="panel category-panel">
+      <h2>1. 카테고리 선택</h2>
+      <div class="categories" id="categoryButtons"></div>
+      <button id="recommendBtn" class="primary-btn" disabled>아무거나 추천받기</button>
+    </section>
+
+    <section class="panel result-panel">
+      <h2>2. 추천 결과</h2>
+      <div id="recommendationCard" class="recommendation-card hidden">
+        <div class="menu-name" id="menuName"></div>
+        <div class="menu-tags" id="menuTags"></div>
+        <div class="actions">
+          <button id="likeBtn" class="like-btn">좋아요</button>
+          <button id="rejectBtn" class="reject-btn">이건 별로야</button>
+        </div>
+      </div>
+      <div id="finalMessage" class="final-message hidden"></div>
+      <div id="hintMessage" class="hint-message hidden"></div>
+      <div id="noMoreMessage" class="no-more-message hidden"></div>
+    </section>
+
+    <section class="panel hint-panel hidden" id="hintSection">
+      <h2>힌트 질문</h2>
+      <div id="hintQuestion" class="hint-question"></div>
+      <div id="hintOptions" class="hint-options"></div>
+    </section>
+
+    <section class="panel reset-panel">
+      <button id="resetBtn" class="secondary-btn">초기화</button>
+    </section>
+
+    <footer>
+      <p>간단한 메뉴 추천으로 오늘의 고민을 재미있게 해결해보세요.</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
