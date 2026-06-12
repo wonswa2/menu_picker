@@ -22,14 +22,14 @@ const MENUS = {
     { name:'꿔바로우', emoji:'🍖', tags:['바삭한','달콤한','든든한'] },
   ],
   일식: [
-    { name:'초밥',   emoji:'🍣', tags:['가벼운','차가운','담백한'] },
-    { name:'라멘',   emoji:'🍜', tags:['국물','든든한','따뜻한'] },
-    { name:'돈카츠', emoji:'🍱', tags:['바삭한','든든한','기름진'] },
-    { name:'우동',   emoji:'🍜', tags:['국물','가벼운','따뜻한'] },
-    { name:'덮밥',   emoji:'🍚', tags:['든든한','빠른','담백한'] },
-    { name:'냉모밀', emoji:'🍝', tags:['차가운','가벼운','담백한'] },
-    { name:'이자카야',emoji:'🍶',tags:['든든한','구이','기름진'] },
-    { name:'타코야키',emoji:'🐙',tags:['바삭한','가벼운','빠른'] },
+    { name:'초밥',    emoji:'🍣', tags:['가벼운','차가운','담백한'] },
+    { name:'라멘',    emoji:'🍜', tags:['국물','든든한','따뜻한'] },
+    { name:'돈카츠',  emoji:'🍱', tags:['바삭한','든든한','기름진'] },
+    { name:'우동',    emoji:'🍜', tags:['국물','가벼운','따뜻한'] },
+    { name:'덮밥',    emoji:'🍚', tags:['든든한','빠른','담백한'] },
+    { name:'냉모밀',  emoji:'🍝', tags:['차가운','가벼운','담백한'] },
+    { name:'이자카야',emoji:'🍶', tags:['든든한','구이','기름진'] },
+    { name:'타코야키',emoji:'🐙', tags:['바삭한','가벼운','빠른'] },
   ],
   양식: [
     { name:'파스타',     emoji:'🍝', tags:['든든한','기름진','달콤한'] },
@@ -53,51 +53,59 @@ const MENUS = {
   ],
 };
 
-const HINTS = [
-  {
-    id:'weight', q:'오늘은 어떤 느낌이세요?',
-    opts:[
-      { label:'🍖 든든하게 먹고 싶어', tag:'든든한', exclude:false },
-      { label:'🥗 가볍게 먹고 싶어',   tag:'가벼운', exclude:false },
-    ]
-  },
-  {
-    id:'broth', q:'국물은요?',
-    opts:[
-      { label:'🍲 국물 있는 거 땡겨',  tag:'국물', exclude:false },
-      { label:'🍳 국물 없는 게 좋아',  tag:'국물', exclude:true  },
-    ]
-  },
-  {
-    id:'spicy', q:'매운 거 괜찮아요?',
-    opts:[
-      { label:'🌶️ 매운 거 좋아',  tag:'매콤한', exclude:false },
-      { label:'😇 안 매운 거 줘', tag:'매콤한', exclude:true  },
-    ]
-  },
+// 거절 횟수별 유머 멘트 (크게 표시됨)
+const REJECT_MSGS = [
+  { emoji:'😅', text:'음... 그럼 다른 거 찾아볼게요!' },
+  { emoji:'🤔', text:'이것도 별로예요? 취향이 까다로우시네요.' },
+  { emoji:'👀', text:'혹시 이미 드시고 싶은 거 정해두신 거 아닌가요?' },
+  { emoji:'😤', text:'4번째 거절이에요. 진짜루요.' },
+  { emoji:'😭', text:'제발요... 뭔가 하나는 마음에 드셔야 할 텐데...' },
+  { emoji:'🏳️', text:'오늘도 네 말이 맞아... 그냥 알아서 드세요.' },
 ];
 
-const MOODS = [
-  '좋아요, 다른 메뉴 찾아볼게요. 🙂',
-  '입맛 찾기가 쉽지 않네요... 🤔',
-  '혹시 이미 정해놓은 거 아니죠? 👀',
-  '제가 맞출 수 있을까요...? 😅',
-  '5번째 거절이에요. 진짜루요. 😤',
-  '오늘도 네 말이 맞아... 😶',
-  '저 그냥 메뉴판 가져다 드릴게요. 🏳️',
+// 힌트 질문 목록
+const HINTS = [
+  {
+    id: 'weight',
+    q: '🍽️ 오늘은 어떤 느낌이에요?',
+    opts: [
+      { label: '🍖 든든하게 먹고 싶어', tag: '든든한', exclude: false },
+      { label: '🥗 가볍게 먹고 싶어',   tag: '가벼운', exclude: false },
+    ]
+  },
+  {
+    id: 'broth',
+    q: '🥣 국물은 어때요?',
+    opts: [
+      { label: '🍲 국물 있는 거 땡겨', tag: '국물', exclude: false },
+      { label: '🍳 국물 없는 게 좋아', tag: '국물', exclude: true  },
+    ]
+  },
+  {
+    id: 'spicy',
+    q: '🌶️ 매운 거 괜찮아요?',
+    opts: [
+      { label: '🌶️ 매운 거 완전 좋아', tag: '매콤한', exclude: false },
+      { label: '😇 안 매운 거로 줘',   tag: '매콤한', exclude: true  },
+    ]
+  },
 ];
 
 const RESULT_MSGS = [
-  { max:1,  msg:'와 첫 번째에 바로 골랐네요! 역시 결단력 있어요 👍' },
-  { max:3,  msg:'몇 번 고민하셨지만 좋은 선택이에요 😊' },
-  { max:5,  msg:'쉽지 않으셨죠... 근데 잘 고르셨어요 🙃' },
-  { max:99, msg:'이렇게까지 거절하셨는데... 사실 처음부터 이거 드시고 싶으셨던 거 아닌가요? 😏' },
+  { max:1,  msg:'첫 번째에 바로 결정! 역시 결단력 있어요 👍' },
+  { max:3,  msg:'고민하셨지만 좋은 선택이에요 😊' },
+  { max:5,  msg:'쉽지 않으셨죠... 그래도 잘 고르셨어요 🙃' },
+  { max:99, msg:'이렇게까지 거절하시다니... 사실 처음부터 이거 드시고 싶으셨던 거 아닌가요? 😏' },
 ];
 
 let state = {
-  cat: null, pool: [], rejected: [],
-  rejectCount: 0, currentMenu: null,
-  hintAnswers: {}, hintShown: false,
+  cat: null,
+  pool: [],
+  rejected: [],
+  rejectCount: 0,
+  currentMenu: null,
+  appliedTags: [],   // 현재 반영된 취향 태그
+  hintAnswers: {},
 };
 
 function getAllMenus() {
@@ -117,13 +125,16 @@ function startRec() {
   state.rejected = [];
   state.rejectCount = 0;
   state.hintAnswers = {};
-  state.hintShown = false;
+  state.appliedTags = [];
   showScreen('screen-rec');
+  updateRejectUI();
   pickAndShow();
 }
 
 function getFilteredPool() {
+  // 거절된 메뉴 제외
   let pool = state.pool.filter(m => !state.rejected.includes(m.name));
+  // 힌트 태그 필터 적용
   Object.values(state.hintAnswers).forEach(({ tag, exclude }) => {
     if (!tag) return;
     const filtered = exclude
@@ -139,44 +150,90 @@ function pickAndShow() {
   if (pool.length === 0) { showExhausted(); return; }
   const menu = pool[Math.floor(Math.random() * pool.length)];
   state.currentMenu = menu;
+
   document.getElementById('menu-emoji').textContent = menu.emoji;
   document.getElementById('menu-name').textContent  = menu.name;
   document.getElementById('menu-tags').innerHTML    = menu.tags.map(t => `<span class="tag">${t}</span>`).join('');
+
+  // 취향 반영 표시
+  updateAppliedTags();
+
+  // 카드 애니메이션
   const card = document.getElementById('menu-card');
   card.style.animation = 'none';
-  setTimeout(() => card.style.animation = '', 10);
-  updateMood();
+  void card.offsetWidth;
+  card.style.animation = 'fadeUp .3s ease';
 }
 
-function updateMood() {
+// 적용된 취향 태그를 화면에 표시
+function updateAppliedTags() {
+  const zone = document.getElementById('applied-tags-zone');
+  const tags = [];
+  Object.values(state.hintAnswers).forEach(({ tag, exclude }) => {
+    if (!tag) return;
+    tags.push(exclude ? `${tag} 제외` : tag);
+  });
+  if (tags.length > 0) {
+    zone.innerHTML = `<div class="applied-bar">✨ 취향 반영 중: ${tags.map(t => `<span class="applied-tag">${t}</span>`).join('')}</div>`;
+  } else {
+    zone.innerHTML = '';
+  }
+}
+
+// 거절 UI (멘트 + 힌트 버튼) 업데이트
+function updateRejectUI() {
+  const msgBox = document.getElementById('reject-msg-box');
+  const hintBtn = document.getElementById('hint-trigger-btn');
   const n = state.rejectCount;
-  document.getElementById('mood-bar').textContent =
-    n === 0 ? '오늘 뭐 먹을까요? 🍽️' : MOODS[Math.min(n - 1, MOODS.length - 1)];
+
+  // 유머 멘트 표시
+  if (n === 0) {
+    msgBox.style.display = 'none';
+  } else {
+    const msg = REJECT_MSGS[Math.min(n - 1, REJECT_MSGS.length - 1)];
+    msgBox.style.display = 'flex';
+    msgBox.innerHTML = `<span class="reject-emoji">${msg.emoji}</span><span>${msg.text}</span>`;
+  }
+
+  // 2~3회 거절 후 힌트 버튼 자동 표시
+  if (n >= 2) {
+    hintBtn.style.display = 'block';
+  } else {
+    hintBtn.style.display = 'none';
+  }
 }
 
 function rejectMenu() {
   if (!state.currentMenu) return;
   state.rejected.push(state.currentMenu.name);
   state.rejectCount++;
-  document.getElementById('menu-card').style.animation = 'shake .4s ease';
-  if (state.rejectCount >= 2 && !state.hintShown) {
-    document.getElementById('hint-zone').innerHTML = `
-      <div class="hint-banner" onclick="showHints()">
-        💡 혹시 취향을 좀 더 알려주실래요? →
-      </div>`;
+
+  // 카드 흔들기
+  const card = document.getElementById('menu-card');
+  card.style.animation = 'shake .4s ease';
+
+  updateRejectUI();
+
+  // 2회 거절 시 힌트 자동 팝업
+  if (state.rejectCount === 2) {
+    setTimeout(() => showHintPopup(), 500);
+  } else {
+    setTimeout(pickAndShow, 420);
   }
-  setTimeout(pickAndShow, 420);
 }
 
 function likeMenu() {
   if (!state.currentMenu) return;
-  document.getElementById('menu-card').style.animation = 'pop .3s ease';
+  const card = document.getElementById('menu-card');
+  card.style.animation = 'pop .3s ease';
   setTimeout(() => showResult(state.currentMenu), 320);
 }
 
-function showHints() {
-  state.hintShown = true;
-  document.getElementById('hints-container').innerHTML = HINTS.map(h => {
+// 힌트 팝업 (2회 거절 시 자동 등장)
+function showHintPopup() {
+  document.getElementById('hint-overlay').style.display = 'flex';
+  const container = document.getElementById('hint-popup-content');
+  container.innerHTML = HINTS.map(h => {
     const opts = h.opts.map(o => `
       <button class="hint-opt"
         data-hint="${h.id}" data-tag="${o.tag}" data-exclude="${o.exclude}"
@@ -187,7 +244,11 @@ function showHints() {
       <div class="hint-opts">${opts}</div>
     </div>`;
   }).join('');
-  showScreen('screen-hint');
+}
+
+function closeHintPopup() {
+  document.getElementById('hint-overlay').style.display = 'none';
+  pickAndShow();
 }
 
 function toggleHint(el, hintId) {
@@ -203,12 +264,7 @@ function applyHints() {
       exclude: el.dataset.exclude === 'true',
     };
   });
-  showScreen('screen-rec');
-  pickAndShow();
-}
-
-function backToRec() {
-  showScreen('screen-rec');
+  document.getElementById('hint-overlay').style.display = 'none';
   pickAndShow();
 }
 
@@ -222,7 +278,19 @@ function showResult(menu) {
     n === 0 ? '바로 결정! 🎉' : n <= 3 ? '드디어 결정! 🎉' : '결국 결정... 😮‍💨';
   document.getElementById('reject-count-badge').innerHTML =
     n === 0 ? '한 번에 결정했어요 ✨'
-    : `이 메뉴 고르기까지 <strong>${n}번</strong> 거절하셨어요`;
+    : `거절 횟수 <strong>${n}번</strong> 끝에 결정했어요`;
+
+  // 반영된 취향도 결과에 표시
+  const tags = [];
+  Object.values(state.hintAnswers).forEach(({ tag, exclude }) => {
+    if (!tag) return;
+    tags.push(exclude ? `${tag} 제외` : tag);
+  });
+  const tagsEl = document.getElementById('result-tags');
+  tagsEl.innerHTML = tags.length > 0
+    ? `<div class="result-applied">취향 반영: ${tags.map(t=>`<span class="applied-tag">${t}</span>`).join('')}</div>`
+    : '';
+
   showScreen('screen-result');
 }
 
@@ -233,7 +301,6 @@ function showExhausted() {
       <p>카테고리 메뉴를 전부 거절하셨어요.<br>사실 이미 드실 거 정해두신 거 아닌가요?</p>
     </div>`;
   document.querySelector('.action-row').style.display = 'none';
-  document.getElementById('hint-zone').innerHTML = '';
 }
 
 function showScreen(id) {
@@ -242,11 +309,11 @@ function showScreen(id) {
 }
 
 function resetAll() {
-  state = { cat:null, pool:[], rejected:[], rejectCount:0, currentMenu:null, hintAnswers:{}, hintShown:false };
+  state = { cat:null, pool:[], rejected:[], rejectCount:0, currentMenu:null, appliedTags:[], hintAnswers:{} };
   document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('selected'));
   document.getElementById('start-btn').disabled = true;
-  document.getElementById('hint-zone').innerHTML = '';
-  document.querySelector('.action-row').style.display = '';
+  document.getElementById('hint-overlay').style.display = 'none';
+  document.querySelector('.action-row') && (document.querySelector('.action-row').style.display = '');
   document.getElementById('menu-card').innerHTML = `
     <span class="menu-emoji" id="menu-emoji">🍲</span>
     <div class="menu-name" id="menu-name">메뉴 이름</div>
