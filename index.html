@@ -1,54 +1,85 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>오늘도 네 말이 맞아</title>
-  <link rel="stylesheet" href="styles.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>오늘도 네 말이 맞아</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Black+Han+Sans&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="app-shell">
-    <header>
-      <h1>오늘도 네 말이 맞아</h1>
-      <p>카테고리를 고르고, 아무거나 추천받은 뒤 <strong>좋아요</strong> 또는 <strong>이건 별로야</strong>로 취향을 찾아보세요.</p>
-    </header>
 
-    <section class="panel category-panel">
-      <h2>1. 카테고리 선택</h2>
-      <div class="categories" id="categoryButtons"></div>
-      <button id="recommendBtn" class="primary-btn" disabled>아무거나 추천받기</button>
-    </section>
-
-    <section class="panel result-panel">
-      <h2>2. 추천 결과</h2>
-      <div id="recommendationCard" class="recommendation-card hidden">
-        <div class="menu-name" id="menuName"></div>
-        <div class="menu-tags" id="menuTags"></div>
-        <div class="actions">
-          <button id="likeBtn" class="like-btn">좋아요</button>
-          <button id="rejectBtn" class="reject-btn">이건 별로야</button>
-        </div>
-      </div>
-      <div id="finalMessage" class="final-message hidden"></div>
-      <div id="hintMessage" class="hint-message hidden"></div>
-      <div id="noMoreMessage" class="no-more-message hidden"></div>
-    </section>
-
-    <section class="panel hint-panel hidden" id="hintSection">
-      <h2>힌트 질문</h2>
-      <div id="hintQuestion" class="hint-question"></div>
-      <div id="hintOptions" class="hint-options"></div>
-    </section>
-
-    <section class="panel reset-panel">
-      <button id="resetBtn" class="secondary-btn">초기화</button>
-    </section>
-
-    <footer>
-      <p>간단한 메뉴 추천으로 오늘의 고민을 재미있게 해결해보세요.</p>
-    </footer>
+<!-- ① 카테고리 선택 -->
+<div class="screen active" id="screen-cat">
+  <div>
+    <div class="logo">오늘도 <span>네 말이 맞아</span></div>
+    <div class="subtitle" style="margin-top:6px">아무거나 먹어도 된다며...</div>
   </div>
 
-  <script src="script.js"></script>
+  <div class="cat-grid">
+    <button class="cat-btn" data-cat="한식" onclick="selectCat(this)">
+      <span class="cat-emoji">🍲</span>한식
+    </button>
+    <button class="cat-btn" data-cat="중식" onclick="selectCat(this)">
+      <span class="cat-emoji">🥟</span>중식
+    </button>
+    <button class="cat-btn" data-cat="일식" onclick="selectCat(this)">
+      <span class="cat-emoji">🍣</span>일식
+    </button>
+    <button class="cat-btn" data-cat="양식" onclick="selectCat(this)">
+      <span class="cat-emoji">🍝</span>양식
+    </button>
+    <button class="cat-btn" data-cat="분식" onclick="selectCat(this)">
+      <span class="cat-emoji">🍢</span>분식
+    </button>
+    <button class="cat-btn" data-cat="전체" onclick="selectCat(this)">
+      <span class="cat-emoji">🎲</span>전체
+    </button>
+  </div>
+
+  <button class="big-btn primary" id="start-btn" disabled onclick="startRec()">
+    아무거나 추천받기
+  </button>
+</div>
+
+<!-- ② 추천 결과 -->
+<div class="screen" id="screen-rec">
+  <div class="logo" style="font-size:20px">오늘도 <span style="color:var(--accent2)">네 말이 맞아</span></div>
+
+  <div class="mood-bar" id="mood-bar">오늘 뭐 먹을까요?</div>
+
+  <div class="menu-card" id="menu-card">
+    <span class="menu-emoji" id="menu-emoji">🍲</span>
+    <div class="menu-name" id="menu-name">메뉴 이름</div>
+    <div class="menu-tags" id="menu-tags"></div>
+  </div>
+
+  <div id="hint-zone"></div>
+
+  <div class="action-row">
+    <button class="reject-btn" onclick="rejectMenu()">😤 이건 별로야</button>
+    <button class="like-btn"   onclick="likeMenu()">😋 좋아요!</button>
+  </div>
+</div>
+
+<!-- ③ 힌트 질문 -->
+<div class="screen" id="screen-hint">
+  <div class="hint-title">잠깐, 취향 좀 물어볼게요 🤔</div>
+  <div id="hints-container" style="width:100%;display:flex;flex-direction:column;gap:12px;"></div>
+  <button class="apply-btn"  onclick="applyHints()">이걸로 다시 찾아줘 →</button>
+  <button class="restart-btn" onclick="backToRec()">그냥 랜덤으로 줘</button>
+</div>
+
+<!-- ④ 최종 결과 -->
+<div class="screen" id="screen-result">
+  <div class="result-badge" id="result-emoji-big">🎉</div>
+  <div class="result-title" id="result-title">드디어 결정!</div>
+  <div class="result-menu-name" id="result-menu-name"></div>
+  <div class="result-msg" id="result-msg"></div>
+  <div class="reject-count-badge" id="reject-count-badge"></div>
+  <button class="big-btn primary" onclick="resetAll()">처음부터 다시</button>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
