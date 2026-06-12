@@ -41,13 +41,9 @@ body {
   from { opacity:0; transform:translateY(-10px); }
   to   { opacity:1; transform:translateY(0); }
 }
-
-/* LOGO */
 .logo { font-family:'Black Han Sans',sans-serif; font-size:26px; color:var(--accent); text-align:center; line-height:1.2; }
 .logo span { color:var(--accent2); }
 .subtitle { font-size:13px; color:var(--text-muted); text-align:center; }
-
-/* CATEGORY */
 .cat-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; width:100%; }
 .cat-btn {
   background:var(--surface); border:2px solid transparent; border-radius:var(--radius);
@@ -58,8 +54,6 @@ body {
 .cat-btn .cat-emoji { font-size:28px; }
 .cat-btn:hover { border-color:var(--accent); background:var(--surface2); }
 .cat-btn.selected { border-color:var(--accent); background:var(--surface2); box-shadow:0 0 0 3px rgba(255,107,53,.25); }
-
-/* BUTTONS */
 .big-btn {
   width:100%; padding:18px; border-radius:var(--radius); border:none;
   font-family:'Black Han Sans',sans-serif; font-size:22px; cursor:pointer; transition:all .2s;
@@ -67,8 +61,6 @@ body {
 .big-btn:disabled { background:var(--surface2); color:var(--text-muted); cursor:not-allowed; }
 .big-btn.primary { background:var(--accent); color:#fff; }
 .big-btn.primary:hover:not(:disabled) { filter:brightness(1.1); transform:translateY(-2px); }
-
-/* ★ 유머 멘트 박스 - 거절 시 크게 표시 */
 .reject-msg-box {
   width:100%; background:rgba(239,69,101,.12);
   border:2px solid rgba(239,69,101,.4);
@@ -78,8 +70,6 @@ body {
   animation: slideDown .3s ease;
 }
 .reject-emoji { font-size:28px; }
-
-/* ★ 취향 반영 중 표시 */
 .applied-bar {
   width:100%; background:rgba(255,209,102,.1);
   border:1px solid rgba(255,209,102,.35);
@@ -91,8 +81,6 @@ body {
   background:rgba(255,209,102,.2); border-radius:20px;
   padding:2px 10px; font-size:12px; color:var(--accent2); font-weight:700;
 }
-
-/* MENU CARD */
 .menu-card {
   width:100%; background:var(--surface); border-radius:28px;
   padding:36px 28px; text-align:center; position:relative; overflow:hidden;
@@ -105,8 +93,6 @@ body {
 .menu-name { font-family:'Black Han Sans',sans-serif; font-size:32px; color:var(--text); margin-bottom:12px; }
 .menu-tags { display:flex; gap:6px; flex-wrap:wrap; justify-content:center; }
 .tag { background:var(--surface2); border-radius:20px; padding:4px 12px; font-size:12px; color:var(--text-muted); }
-
-/* ★ 힌트 버튼 (2회 거절 후 자동 표시) */
 .hint-trigger-btn {
   width:100%; background:linear-gradient(135deg, var(--surface2), #2d2b45);
   border:1px solid rgba(255,209,102,.4); border-radius:var(--radius);
@@ -115,8 +101,6 @@ body {
   cursor:pointer; transition:all .2s; animation: slideDown .3s ease;
 }
 .hint-trigger-btn:hover { border-color:var(--accent2); }
-
-/* ACTION BUTTONS */
 .action-row { display:flex; gap:12px; width:100%; }
 .reject-btn, .like-btn {
   flex:1; padding:16px; border-radius:var(--radius); border:none;
@@ -128,8 +112,6 @@ body {
 .reject-btn:hover { background:rgba(239,69,101,.3); transform:scale(1.02); }
 .like-btn { background:rgba(6,214,160,.15); color:var(--like); border:2px solid var(--like); }
 .like-btn:hover { background:rgba(6,214,160,.3); transform:scale(1.02); }
-
-/* ★ 힌트 오버레이 팝업 */
 .hint-overlay {
   position:fixed; inset:0; background:rgba(0,0,0,.75);
   display:flex; align-items:center; justify-content:center;
@@ -154,7 +136,6 @@ body {
 }
 .hint-opt:hover { border-color:var(--accent2); color:var(--text); }
 .hint-opt.selected { border-color:var(--accent2); color:var(--accent2); background:rgba(255,209,102,.1); }
-
 .apply-btn {
   width:100%; padding:16px; border-radius:var(--radius); border:none;
   background:var(--accent2); color:#0f0e17;
@@ -167,8 +148,6 @@ body {
   font-size:13px; cursor:pointer; text-decoration:underline;
   font-family:'Noto Sans KR',sans-serif;
 }
-
-/* RESULT */
 .result-badge {
   background:linear-gradient(135deg, var(--accent), var(--accent2));
   border-radius:50%; width:90px; height:90px;
@@ -181,8 +160,6 @@ body {
 .reject-count-badge { background:var(--surface); border-radius:var(--radius); padding:12px 24px; font-size:13px; color:var(--text-muted); }
 .reject-count-badge strong { color:var(--reject); }
 .result-applied { font-size:13px; color:var(--accent2); display:flex; align-items:center; gap:6px; flex-wrap:wrap; justify-content:center; }
-
-/* EXHAUSTED */
 .exhausted { text-align:center; padding:20px 0; }
 .exhausted-emoji { font-size:52px; margin-bottom:12px; display:block; }
 .exhausted p { font-size:15px; color:var(--text-muted); line-height:1.7; }
