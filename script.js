@@ -1,277 +1,255 @@
-const categories = [
-  "한식",
-  "중식",
-  "일식",
-  "양식",
-  "분식",
-];
+const MENUS = {
+  한식: [
+    { name:'김치찌개', emoji:'🍲', tags:['국물','매콤한','든든한'] },
+    { name:'된장찌개', emoji:'🫕', tags:['국물','구수한','든든한'] },
+    { name:'제육볶음', emoji:'🥩', tags:['매콤한','든든한','볶음'] },
+    { name:'비빔밥',   emoji:'🍚', tags:['가벼운','건강한','든든한'] },
+    { name:'삼겹살',   emoji:'🥓', tags:['든든한','구이','기름진'] },
+    { name:'불고기',   emoji:'🍖', tags:['달콤한','구이','든든한'] },
+    { name:'냉면',     emoji:'🍜', tags:['차가운','가벼운','국물'] },
+    { name:'순두부찌개',emoji:'🍲',tags:['국물','매콤한','가벼운'] },
+    { name:'갈비탕',   emoji:'🍛', tags:['국물','든든한','구수한'] },
+    { name:'파전',     emoji:'🥞', tags:['가벼운','바삭한'] },
+  ],
+  중식: [
+    { name:'짜장면',   emoji:'🍝', tags:['든든한','볶음','달콤한'] },
+    { name:'짬뽕',     emoji:'🍜', tags:['국물','매콤한','든든한'] },
+    { name:'탕수육',   emoji:'🍗', tags:['바삭한','달콤한','든든한'] },
+    { name:'마파두부', emoji:'🫕', tags:['매콤한','국물','가벼운'] },
+    { name:'볶음밥',   emoji:'🍚', tags:['든든한','볶음','빠른'] },
+    { name:'딤섬',     emoji:'🥟', tags:['가벼운','찜','담백한'] },
+    { name:'마라탕',   emoji:'🌶️', tags:['매콤한','국물','든든한'] },
+    { name:'꿔바로우', emoji:'🍖', tags:['바삭한','달콤한','든든한'] },
+  ],
+  일식: [
+    { name:'초밥',   emoji:'🍣', tags:['가벼운','차가운','담백한'] },
+    { name:'라멘',   emoji:'🍜', tags:['국물','든든한','따뜻한'] },
+    { name:'돈카츠', emoji:'🍱', tags:['바삭한','든든한','기름진'] },
+    { name:'우동',   emoji:'🍜', tags:['국물','가벼운','따뜻한'] },
+    { name:'덮밥',   emoji:'🍚', tags:['든든한','빠른','담백한'] },
+    { name:'냉모밀', emoji:'🍝', tags:['차가운','가벼운','담백한'] },
+    { name:'이자카야',emoji:'🍶',tags:['든든한','구이','기름진'] },
+    { name:'타코야키',emoji:'🐙',tags:['바삭한','가벼운','빠른'] },
+  ],
+  양식: [
+    { name:'파스타',     emoji:'🍝', tags:['든든한','기름진','달콤한'] },
+    { name:'스테이크',   emoji:'🥩', tags:['든든한','구이','기름진'] },
+    { name:'피자',       emoji:'🍕', tags:['든든한','기름진','바삭한'] },
+    { name:'햄버거',     emoji:'🍔', tags:['든든한','기름진','빠른'] },
+    { name:'리조또',     emoji:'🍚', tags:['든든한','따뜻한','구수한'] },
+    { name:'샐러드',     emoji:'🥗', tags:['가벼운','건강한','차가운'] },
+    { name:'클램차우더', emoji:'🥣', tags:['국물','든든한','따뜻한'] },
+    { name:'그라탱',     emoji:'🫕', tags:['든든한','바삭한','기름진'] },
+  ],
+  분식: [
+    { name:'떡볶이',     emoji:'🌶️', tags:['매콤한','달콤한','든든한'] },
+    { name:'순대국',     emoji:'🍲', tags:['국물','든든한','구수한'] },
+    { name:'라볶이',     emoji:'🍜', tags:['매콤한','든든한','국물'] },
+    { name:'김밥',       emoji:'🍙', tags:['가벼운','담백한','빠른'] },
+    { name:'튀김',       emoji:'🍤', tags:['바삭한','기름진','가벼운'] },
+    { name:'어묵탕',     emoji:'🍢', tags:['국물','가벼운','따뜻한'] },
+    { name:'치즈떡볶이', emoji:'🧀', tags:['매콤한','달콤한','든든한'] },
+    { name:'쫄면',       emoji:'🍜', tags:['매콤한','차가운','가벼운'] },
+  ],
+};
 
-const menus = [
-  { name: "김치찌개", category: "한식", tags: ["국물", "매콤한", "든든한"] },
-  { name: "제육볶음", category: "한식", tags: ["볶음", "매콤한", "든든한", "국물없는"] },
-  { name: "비빔밥", category: "한식", tags: ["비빔", "매콤한", "가벼운"] },
-  { name: "불고기", category: "한식", tags: ["고기", "달콤한", "든든한", "순한", "국물없는"] },
-  { name: "부대찌개", category: "한식", tags: ["국물", "매콤한", "든든한"] },
-  { name: "잡채", category: "한식", tags: ["볶음", "순한", "든든한", "국물없는"] },
-  { name: "된장찌개", category: "한식", tags: ["국물", "순한", "든든한"] },
-  { name: "칼국수", category: "한식", tags: ["국물", "순한", "든든한"] },
-  { name: "짜장면", category: "중식", tags: ["국물없는", "순한", "든든한"] },
-  { name: "짬뽕", category: "중식", tags: ["국물", "매콤한", "든든한"] },
-  { name: "탕수육", category: "중식", tags: ["튀김", "순한", "국물없는"] },
-  { name: "마파두부", category: "중식", tags: ["국물", "매콤한", "든든한"] },
-  { name: "깐풍기", category: "중식", tags: ["튀김", "매콤한", "국물없는"] },
-  { name: "양장피", category: "중식", tags: ["국물없는", "순한", "가벼운"] },
-  { name: "돈부리", category: "일식", tags: ["밥", "순한", "든든한", "국물없는"] },
-  { name: "라멘", category: "일식", tags: ["국물", "순한", "든든한"] },
-  { name: "냉모밀", category: "일식", tags: ["차가운", "가벼운", "국물", "순한"] },
-  { name: "초밥", category: "일식", tags: ["가벼운", "순한", "국물없는"] },
-  { name: "가츠동", category: "일식", tags: ["덮밥", "순한", "든든한", "국물없는"] },
-  { name: "스테이크", category: "양식", tags: ["고기", "든든한", "순한", "국물없는"] },
-  { name: "파스타", category: "양식", tags: ["면", "순한", "든든한", "국물없는"] },
-  { name: "피자", category: "양식", tags: ["치즈", "순한", "국물없는"] },
-  { name: "리조또", category: "양식", tags: ["쌀", "순한", "든든한", "국물없는"] },
-  { name: "수프", category: "양식", tags: ["국물", "순한", "가벼운"] },
-  { name: "떡볶이", category: "분식", tags: ["매콤한", "국물없는", "든든한"] },
-  { name: "순대", category: "분식", tags: ["매콤한", "국물없는", "든든한"] },
-  { name: "김밥", category: "분식", tags: ["가벼운", "순한", "국물없는"] },
-  { name: "컵밥", category: "분식", tags: ["든든한", "순한", "국물없는"] },
-  { name: "튀김", category: "분식", tags: ["가벼운", "순한", "국물없는"] },
-  { name: "오뎅", category: "분식", tags: ["국물", "순한", "가벼운"] },
-  { name: "만두", category: "분식", tags: ["가벼운", "순한", "국물없는"] },
-];
-
-const hintQuestions = [
+const HINTS = [
   {
-    question: "오늘은 어떤 느낌이신가요?",
-    options: [
-      { label: "든든한 음식", tag: "든든한" },
-      { label: "가벼운 음식", tag: "가벼운" },
-    ],
+    id:'weight', q:'오늘은 어떤 느낌이세요?',
+    opts:[
+      { label:'🍖 든든하게 먹고 싶어', tag:'든든한', exclude:false },
+      { label:'🥗 가볍게 먹고 싶어',   tag:'가벼운', exclude:false },
+    ]
   },
   {
-    question: "어떤 스타일이 좋으신가요?",
-    options: [
-      { label: "국물 있는 음식", tag: "국물" },
-      { label: "국물 없는 음식", tag: "국물없는" },
-    ],
+    id:'broth', q:'국물은요?',
+    opts:[
+      { label:'🍲 국물 있는 거 땡겨',  tag:'국물', exclude:false },
+      { label:'🍳 국물 없는 게 좋아',  tag:'국물', exclude:true  },
+    ]
   },
   {
-    question: "매운 음식은 어떠신가요?",
-    options: [
-      { label: "좋아요", tag: "매콤한" },
-      { label: "싫어요", tag: "순한" },
-    ],
+    id:'spicy', q:'매운 거 괜찮아요?',
+    opts:[
+      { label:'🌶️ 매운 거 좋아',  tag:'매콤한', exclude:false },
+      { label:'😇 안 매운 거 줘', tag:'매콤한', exclude:true  },
+    ]
   },
 ];
 
-const rejectionMessages = [
-  "좋아요, 다른 메뉴 찾아볼게요.",
-  "입맛 찾기가 쉽지 않네요.",
-  "혹시 이미 정해놓은 거 아니죠?",
-  "제가 맞출 수 있을까요...?",
-  "오늘도 네 말이 맞아...",
+const MOODS = [
+  '좋아요, 다른 메뉴 찾아볼게요. 🙂',
+  '입맛 찾기가 쉽지 않네요... 🤔',
+  '혹시 이미 정해놓은 거 아니죠? 👀',
+  '제가 맞출 수 있을까요...? 😅',
+  '5번째 거절이에요. 진짜루요. 😤',
+  '오늘도 네 말이 맞아... 😶',
+  '저 그냥 메뉴판 가져다 드릴게요. 🏳️',
 ];
 
-const categoryButtons = document.getElementById("categoryButtons");
-const recommendBtn = document.getElementById("recommendBtn");
-const recommendationCard = document.getElementById("recommendationCard");
-const menuNameEl = document.getElementById("menuName");
-const menuTagsEl = document.getElementById("menuTags");
-const likeBtn = document.getElementById("likeBtn");
-const rejectBtn = document.getElementById("rejectBtn");
-const hintSection = document.getElementById("hintSection");
-const hintQuestion = document.getElementById("hintQuestion");
-const hintOptions = document.getElementById("hintOptions");
-const hintMessage = document.getElementById("hintMessage");
-const finalMessage = document.getElementById("finalMessage");
-const noMoreMessage = document.getElementById("noMoreMessage");
-const resetBtn = document.getElementById("resetBtn");
+const RESULT_MSGS = [
+  { max:1,  msg:'와 첫 번째에 바로 골랐네요! 역시 결단력 있어요 👍' },
+  { max:3,  msg:'몇 번 고민하셨지만 좋은 선택이에요 😊' },
+  { max:5,  msg:'쉽지 않으셨죠... 근데 잘 고르셨어요 🙃' },
+  { max:99, msg:'이렇게까지 거절하셨는데... 사실 처음부터 이거 드시고 싶으셨던 거 아닌가요? 😏' },
+];
 
-let selectedCategory = "";
-let currentMenu = null;
-let rejectedMenus = new Set();
-let rejectionCount = 0;
-let filterTags = new Set();
-let currentHintIndex = 0;
+let state = {
+  cat: null, pool: [], rejected: [],
+  rejectCount: 0, currentMenu: null,
+  hintAnswers: {}, hintShown: false,
+};
 
-function initCategories() {
-  categories.forEach((category) => {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "category-button";
-    button.textContent = category;
-    button.addEventListener("click", () => selectCategory(category, button));
-    categoryButtons.appendChild(button);
+function getAllMenus() {
+  return Object.values(MENUS).flat();
+}
+
+function selectCat(el) {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+  state.cat = el.dataset.cat;
+  document.getElementById('start-btn').disabled = false;
+}
+
+function startRec() {
+  const base = state.cat === '전체' ? getAllMenus() : (MENUS[state.cat] || []);
+  state.pool = [...base];
+  state.rejected = [];
+  state.rejectCount = 0;
+  state.hintAnswers = {};
+  state.hintShown = false;
+  showScreen('screen-rec');
+  pickAndShow();
+}
+
+function getFilteredPool() {
+  let pool = state.pool.filter(m => !state.rejected.includes(m.name));
+  Object.values(state.hintAnswers).forEach(({ tag, exclude }) => {
+    if (!tag) return;
+    const filtered = exclude
+      ? pool.filter(m => !m.tags.includes(tag))
+      : pool.filter(m =>  m.tags.includes(tag));
+    if (filtered.length > 0) pool = filtered;
   });
+  return pool;
 }
 
-function selectCategory(category, button) {
-  selectedCategory = category;
-  const buttons = categoryButtons.querySelectorAll("button");
-  buttons.forEach((btn) => btn.classList.toggle("selected", btn === button));
-  recommendBtn.disabled = false;
-  hideMessages();
-  resetSession();
+function pickAndShow() {
+  const pool = getFilteredPool();
+  if (pool.length === 0) { showExhausted(); return; }
+  const menu = pool[Math.floor(Math.random() * pool.length)];
+  state.currentMenu = menu;
+  document.getElementById('menu-emoji').textContent = menu.emoji;
+  document.getElementById('menu-name').textContent  = menu.name;
+  document.getElementById('menu-tags').innerHTML    = menu.tags.map(t => `<span class="tag">${t}</span>`).join('');
+  const card = document.getElementById('menu-card');
+  card.style.animation = 'none';
+  setTimeout(() => card.style.animation = '', 10);
+  updateMood();
 }
 
-function resetSession() {
-  rejectedMenus.clear();
-  rejectionCount = 0;
-  filterTags.clear();
-  currentHintIndex = 0;
-  currentMenu = null;
-  recommendationCard.classList.add("hidden");
-  hintSection.classList.add("hidden");
-  finalMessage.classList.add("hidden");
-  noMoreMessage.classList.add("hidden");
-  hintMessage.classList.add("hidden");
+function updateMood() {
+  const n = state.rejectCount;
+  document.getElementById('mood-bar').textContent =
+    n === 0 ? '오늘 뭐 먹을까요? 🍽️' : MOODS[Math.min(n - 1, MOODS.length - 1)];
 }
 
-function getFilteredMenus() {
-  return menus.filter((menu) => {
-    if (menu.category !== selectedCategory) return false;
-    if (rejectedMenus.has(menu.name)) return false;
-    for (const tag of filterTags) {
-      if (!menu.tags.includes(tag)) return false;
-    }
-    return true;
+function rejectMenu() {
+  if (!state.currentMenu) return;
+  state.rejected.push(state.currentMenu.name);
+  state.rejectCount++;
+  document.getElementById('menu-card').style.animation = 'shake .4s ease';
+  if (state.rejectCount >= 2 && !state.hintShown) {
+    document.getElementById('hint-zone').innerHTML = `
+      <div class="hint-banner" onclick="showHints()">
+        💡 혹시 취향을 좀 더 알려주실래요? →
+      </div>`;
+  }
+  setTimeout(pickAndShow, 420);
+}
+
+function likeMenu() {
+  if (!state.currentMenu) return;
+  document.getElementById('menu-card').style.animation = 'pop .3s ease';
+  setTimeout(() => showResult(state.currentMenu), 320);
+}
+
+function showHints() {
+  state.hintShown = true;
+  document.getElementById('hints-container').innerHTML = HINTS.map(h => {
+    const opts = h.opts.map(o => `
+      <button class="hint-opt"
+        data-hint="${h.id}" data-tag="${o.tag}" data-exclude="${o.exclude}"
+        onclick="toggleHint(this,'${h.id}')">${o.label}</button>
+    `).join('');
+    return `<div class="hint-card">
+      <div class="hint-q">${h.q}</div>
+      <div class="hint-opts">${opts}</div>
+    </div>`;
+  }).join('');
+  showScreen('screen-hint');
+}
+
+function toggleHint(el, hintId) {
+  document.querySelectorAll(`[data-hint="${hintId}"]`).forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function applyHints() {
+  state.hintAnswers = {};
+  document.querySelectorAll('.hint-opt.selected').forEach(el => {
+    state.hintAnswers[el.dataset.hint] = {
+      tag: el.dataset.tag,
+      exclude: el.dataset.exclude === 'true',
+    };
   });
+  showScreen('screen-rec');
+  pickAndShow();
 }
 
-function pickRandomMenu() {
-  const candidates = getFilteredMenus();
-  if (!candidates.length) return null;
-  return candidates[Math.floor(Math.random() * candidates.length)];
+function backToRec() {
+  showScreen('screen-rec');
+  pickAndShow();
 }
 
-function updateMenuCard(menu) {
-  if (!menu) {
-    recommendationCard.classList.add("hidden");
-    return;
-  }
-
-  currentMenu = menu;
-  menuNameEl.textContent = menu.name;
-  menuTagsEl.innerHTML = menu.tags
-    .map((tag) => `<span class="menu-tag">${tag}</span>`)
-    .join("");
-  recommendationCard.classList.remove("hidden");
+function showResult(menu) {
+  document.getElementById('result-emoji-big').textContent = menu.emoji;
+  document.getElementById('result-menu-name').textContent = menu.name;
+  const n = state.rejectCount;
+  const entry = RESULT_MSGS.find(e => n <= e.max) || RESULT_MSGS[RESULT_MSGS.length - 1];
+  document.getElementById('result-msg').textContent = entry.msg;
+  document.getElementById('result-title').textContent =
+    n === 0 ? '바로 결정! 🎉' : n <= 3 ? '드디어 결정! 🎉' : '결국 결정... 😮‍💨';
+  document.getElementById('reject-count-badge').innerHTML =
+    n === 0 ? '한 번에 결정했어요 ✨'
+    : `이 메뉴 고르기까지 <strong>${n}번</strong> 거절하셨어요`;
+  showScreen('screen-result');
 }
 
-function showHintQuestion() {
-  if (currentHintIndex >= hintQuestions.length) {
-    hintSection.classList.add("hidden");
-    return;
-  }
-
-  const question = hintQuestions[currentHintIndex];
-  hintQuestion.textContent = question.question;
-  hintOptions.innerHTML = "";
-  question.options.forEach((option) => {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "hint-option";
-    button.textContent = option.label;
-    button.addEventListener("click", () => applyHint(option.tag));
-    hintOptions.appendChild(button);
-  });
-  hintSection.classList.remove("hidden");
+function showExhausted() {
+  document.getElementById('menu-card').innerHTML = `
+    <div class="exhausted">
+      <span class="exhausted-emoji">😤</span>
+      <p>카테고리 메뉴를 전부 거절하셨어요.<br>사실 이미 드실 거 정해두신 거 아닌가요?</p>
+    </div>`;
+  document.querySelector('.action-row').style.display = 'none';
+  document.getElementById('hint-zone').innerHTML = '';
 }
 
-function applyHint(tag) {
-  filterTags.add(tag);
-  currentHintIndex += 1;
-  hintMessage.textContent = `좋아요! ${tag} 메뉴를 더 찾아볼게요.`;
-  hintMessage.classList.remove("hidden");
-  recommendNextMenu();
-  showHintQuestion();
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
 }
 
-function getRejectionMessage() {
-  if (rejectionCount >= 5) {
-    return rejectionMessages[4];
-  }
-  return rejectionMessages[rejectionCount - 1] || "다른 메뉴를 찾아볼게요.";
+function resetAll() {
+  state = { cat:null, pool:[], rejected:[], rejectCount:0, currentMenu:null, hintAnswers:{}, hintShown:false };
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('selected'));
+  document.getElementById('start-btn').disabled = true;
+  document.getElementById('hint-zone').innerHTML = '';
+  document.querySelector('.action-row').style.display = '';
+  document.getElementById('menu-card').innerHTML = `
+    <span class="menu-emoji" id="menu-emoji">🍲</span>
+    <div class="menu-name" id="menu-name">메뉴 이름</div>
+    <div class="menu-tags" id="menu-tags"></div>`;
+  showScreen('screen-cat');
 }
-
-function showNoMoreMessage() {
-  recommendationCard.classList.add("hidden");
-  noMoreMessage.textContent = "아직 추천할 메뉴가 남아있지 않아요. 카테고리를 바꾸거나 초기화를 눌러주세요.";
-  noMoreMessage.classList.remove("hidden");
-}
-
-function recommendNextMenu() {
-  const menu = pickRandomMenu();
-  if (!menu) {
-    showNoMoreMessage();
-    currentMenu = null;
-    return;
-  }
-
-  updateMenuCard(menu);
-  finalMessage.classList.add("hidden");
-  noMoreMessage.classList.add("hidden");
-}
-
-function handleRecommend() {
-  if (!selectedCategory) return;
-  rejectedMenus.clear();
-  rejectionCount = 0;
-  filterTags.clear();
-  currentHintIndex = 0;
-  hintMessage.classList.add("hidden");
-  hintSection.classList.add("hidden");
-  finalMessage.classList.add("hidden");
-  noMoreMessage.classList.add("hidden");
-  recommendNextMenu();
-}
-
-function handleLike() {
-  if (!currentMenu) return;
-  finalMessage.textContent = `최종 선택: ${currentMenu.name}!
-이 메뉴로 오늘의 식사 결정을 내려볼까요?`;
-  finalMessage.classList.remove("hidden");
-  recommendationCard.classList.add("hidden");
-  hintSection.classList.add("hidden");
-  hintMessage.classList.add("hidden");
-  noMoreMessage.classList.add("hidden");
-}
-
-function handleReject() {
-  if (!currentMenu) return;
-  rejectionCount += 1;
-  rejectedMenus.add(currentMenu.name);
-  hintMessage.textContent = getRejectionMessage();
-  hintMessage.classList.remove("hidden");
-  if (rejectionCount >= 2) {
-    showHintQuestion();
-  }
-  recommendNextMenu();
-}
-
-function hideMessages() {
-  hintMessage.classList.add("hidden");
-  finalMessage.classList.add("hidden");
-  noMoreMessage.classList.add("hidden");
-}
-
-recommendBtn.addEventListener("click", handleRecommend);
-likeBtn.addEventListener("click", handleLike);
-rejectBtn.addEventListener("click", handleReject);
-resetBtn.addEventListener("click", () => {
-  selectedCategory = "";
-  recommendationCard.classList.add("hidden");
-  hintSection.classList.add("hidden");
-  finalMessage.classList.add("hidden");
-  hintMessage.classList.add("hidden");
-  noMoreMessage.classList.add("hidden");
-  filterTags.clear();
-  currentHintIndex = 0;
-  rejectionCount = 0;
-  rejectedMenus.clear();
-  recommendBtn.disabled = true;
-  const buttons = categoryButtons.querySelectorAll("button");
-  buttons.forEach((btn) => btn.classList.remove("selected"));
-});
-
-initCategories();
