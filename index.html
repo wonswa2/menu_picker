@@ -13,61 +13,57 @@
 <div class="screen active" id="screen-cat">
   <div>
     <div class="logo">오늘도 <span>네 말이 맞아</span></div>
-    <div class="subtitle" style="margin-top:6px">아무거나 먹어도 된다며...</div>
+    <div class="subtitle">아무거나 먹어도 된다며...</div>
   </div>
-
   <div class="cat-grid">
-    <button class="cat-btn" data-cat="한식" onclick="selectCat(this)">
-      <span class="cat-emoji">🍲</span>한식
-    </button>
-    <button class="cat-btn" data-cat="중식" onclick="selectCat(this)">
-      <span class="cat-emoji">🥟</span>중식
-    </button>
-    <button class="cat-btn" data-cat="일식" onclick="selectCat(this)">
-      <span class="cat-emoji">🍣</span>일식
-    </button>
-    <button class="cat-btn" data-cat="양식" onclick="selectCat(this)">
-      <span class="cat-emoji">🍝</span>양식
-    </button>
-    <button class="cat-btn" data-cat="분식" onclick="selectCat(this)">
-      <span class="cat-emoji">🍢</span>분식
-    </button>
-    <button class="cat-btn" data-cat="전체" onclick="selectCat(this)">
-      <span class="cat-emoji">🎲</span>전체
-    </button>
+    <button class="cat-btn" data-cat="한식" onclick="selectCat(this)"><span class="cat-emoji">🍲</span>한식</button>
+    <button class="cat-btn" data-cat="중식" onclick="selectCat(this)"><span class="cat-emoji">🥟</span>중식</button>
+    <button class="cat-btn" data-cat="일식" onclick="selectCat(this)"><span class="cat-emoji">🍣</span>일식</button>
+    <button class="cat-btn" data-cat="양식" onclick="selectCat(this)"><span class="cat-emoji">🍝</span>양식</button>
+    <button class="cat-btn" data-cat="분식" onclick="selectCat(this)"><span class="cat-emoji">🍢</span>분식</button>
+    <button class="cat-btn" data-cat="전체" onclick="selectCat(this)"><span class="cat-emoji">🎲</span>전체</button>
   </div>
-
-  <button class="big-btn primary" id="start-btn" disabled onclick="startRec()">
-    아무거나 추천받기
-  </button>
+  <button class="big-btn primary" id="start-btn" disabled onclick="startRec()">아무거나 추천받기</button>
 </div>
 
 <!-- ② 추천 결과 -->
 <div class="screen" id="screen-rec">
   <div class="logo" style="font-size:20px">오늘도 <span style="color:var(--accent2)">네 말이 맞아</span></div>
 
-  <div class="mood-bar" id="mood-bar">오늘 뭐 먹을까요?</div>
+  <!-- 유머 멘트 (거절 시 크게 표시) -->
+  <div class="reject-msg-box" id="reject-msg-box" style="display:none"></div>
 
+  <!-- 취향 반영 중 표시 -->
+  <div id="applied-tags-zone"></div>
+
+  <!-- 메뉴 카드 -->
   <div class="menu-card" id="menu-card">
     <span class="menu-emoji" id="menu-emoji">🍲</span>
     <div class="menu-name" id="menu-name">메뉴 이름</div>
     <div class="menu-tags" id="menu-tags"></div>
   </div>
 
-  <div id="hint-zone"></div>
+  <!-- 힌트 버튼 (2회 거절 후 자동 표시) -->
+  <button class="hint-trigger-btn" id="hint-trigger-btn" style="display:none" onclick="showHintPopup()">
+    💡 취향 알려주면 더 잘 찾아줄게요 →
+  </button>
 
+  <!-- 좋아요 / 이건 별로야 -->
   <div class="action-row">
     <button class="reject-btn" onclick="rejectMenu()">😤 이건 별로야</button>
     <button class="like-btn"   onclick="likeMenu()">😋 좋아요!</button>
   </div>
 </div>
 
-<!-- ③ 힌트 질문 -->
-<div class="screen" id="screen-hint">
-  <div class="hint-title">잠깐, 취향 좀 물어볼게요 🤔</div>
-  <div id="hints-container" style="width:100%;display:flex;flex-direction:column;gap:12px;"></div>
-  <button class="apply-btn"  onclick="applyHints()">이걸로 다시 찾아줘 →</button>
-  <button class="restart-btn" onclick="backToRec()">그냥 랜덤으로 줘</button>
+<!-- ③ 힌트 팝업 오버레이 (2회 거절 시 자동 등장) -->
+<div class="hint-overlay" id="hint-overlay" style="display:none">
+  <div class="hint-popup">
+    <div class="hint-popup-title">잠깐! 취향 좀 알려줄래요? 🤔</div>
+    <div class="hint-popup-desc">답변에 맞춰서 메뉴 추천할게요</div>
+    <div id="hint-popup-content" style="display:flex;flex-direction:column;gap:14px;width:100%"></div>
+    <button class="apply-btn" onclick="applyHints()">이 취향으로 다시 찾아줘 ✨</button>
+    <button class="skip-btn"  onclick="closeHintPopup()">그냥 랜덤으로 줘</button>
+  </div>
 </div>
 
 <!-- ④ 최종 결과 -->
@@ -77,6 +73,7 @@
   <div class="result-menu-name" id="result-menu-name"></div>
   <div class="result-msg" id="result-msg"></div>
   <div class="reject-count-badge" id="reject-count-badge"></div>
+  <div id="result-tags"></div>
   <button class="big-btn primary" onclick="resetAll()">처음부터 다시</button>
 </div>
 
